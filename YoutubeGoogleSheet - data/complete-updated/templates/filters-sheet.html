@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>YoutubeGoogleSheet</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        select, input[type="text"], input[type="submit"] {
+            margin-bottom: 10px;
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+
+        }
+    </style>
+</head>
+<body>
+
+
+
+
+
+
+    <form action="#" method="POST">
+        <!-- current playlist url: https://www.youtube.com/playlist?list=PLWKjhJtqVAbnZtkAI3BqcYxKnfWn_C704 -->
+        <!-- current live video id: https://www.youtube.com/watch?v=5qap5aO4i9A -->
+
+        <h1>UPDATE Google Sheet</h1>
+
+
+
+
+        <select name="video-title" required>
+            {% for video in video_list_data %}
+                <option value="{{ video }}">{{ video }}</option>
+            {% endfor %}
+        </select>
+
+        <select name="min-duration" required>
+            {% for duration in [5,10,15,20,25,30,45,60] %}
+                <option value="{{ duration }}">{{ duration }} minutes</option>
+            {% endfor %}
+        </select>
+
+        <select name="total-difference" required>
+            <option value="total">Total</option>
+            <option value="difference">Difference</option>
+        </select>
+
+
+        <input type="submit" value="Submit">
+
+
+        <br>
+        <button onclick="window.open('/', '_self')">HOME PAGE</button>
+
+
+
+    </form>
+    <script>
+
+    </script>
+</body>
+</html>

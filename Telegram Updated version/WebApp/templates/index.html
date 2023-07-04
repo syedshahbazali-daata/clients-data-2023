@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Binance BotApp</title>
+    <link rel="stylesheet" href="../static/style.css">
+
+</head>
+<body>
+
+<div class="header">
+
+
+    <div class="date-time-div" style="background: gold; border-radius: 10px; padding: 0 10px 0 10px; margin-top: 10px">
+        <p class="date-time" id="date-time" style="font-size: 8px"><b>2021-05-12 12:00:00</b></p>
+
+    </div>
+
+
+    <!--navbar-->
+    <div class="navbar">
+        <a href="index.html" class="navbar-link">Home</a>
+        <a href="about.html" class="navbar-link">Settings</a>
+        <a href="contact.html" class="navbar-link">Contact</a>
+    </div>
+</div>
+
+
+<!--main-->
+<div class="main-div">
+    <!--Add image in Center-->
+
+    <div class="main-logo-head">
+        <img src="../static/logo.png" alt="logo" class="logo" width="50" height="50">
+
+        <h1 class="main-heading" style="color: gold; margin-left: 10px">Binance Bot WebApp</h1>
+    </div>
+
+
+</div>
+
+<!--Card with shadow-->
+<div class="cards">
+    <div class="card">
+        <div class="card-body">
+            <h1 class="card-heading" style="color: red">User info</h1>
+            <!--Structure like Key: Value-->
+            <p class="card-text"><b>Binance API: </b><span id="Binance-API">508872114878f0203f45231d2d4e68e9</span></p>
+            <p class="card-text"><b>Telegram HASH: </b><span id="Telegram-HASH">1234556</span></p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h1 class="card-heading" style="color: cornflowerblue">Current info</h1>
+            <!--Structure like Key: Value-->
+            <p class="card-text"><b>Total Signals: </b><span id="Total-Signals">12</span></p>
+            <p class="card-text"><b>Todays Signals: </b><span id="Todays-Signals">2</span></p>
+            <p class="card-text"><b>Bot State: </b><span style="color: red" id="bot-state"></span></p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h1 class="card-heading" style="color: springgreen">Profits</h1>
+            <!--Structure like Key: Value-->
+            <p class="card-text"><b>Today: </b><span id="Today-Profit">0.00000000</span></p>
+            <p class="card-text"><b>Lifetime: </b><span id="Lifetime-Profit">0.00000000</span></p>
+        </div>
+    </div>
+</div>
+
+<br>
+
+
+<button class="run-btn" name="state" value="run">Run bot</button>
+
+
+
+
+<script>
+    // date-time update date and time every second
+    setInterval(function () {
+        var date = new Date();
+        var time = date.toLocaleTimeString();
+        var date = date.toLocaleDateString();
+        document.getElementById("date-time").innerHTML = date + " " + time;
+        // make them bold
+
+    }, 100);
+
+    // zoom in 120% on load
+    document.body.style.zoom = "125%";
+
+    // run bot on click button - change value of button to run or stop and change color
+    var state = "run";
+    var btn = document.querySelector(".run-btn");
+    var bot_state = document.getElementById("bot-state");
+
+    btn.addEventListener("click", function () {
+        if (state == "run") {
+            state = "stop";
+            btn.style.backgroundColor = "red";
+            btn.innerHTML = "Stop bot";
+            bot_state.innerHTML = "Running"
+            bot_state.style.color = "springgreen";
+
+
+        } else {
+            state = "run";
+            btn.style.backgroundColor = "springgreen";
+            btn.innerHTML = "Run bot";
+            bot_state.innerHTML = "Stopped"
+            bot_state.style.color = "red";
+
+        }
+    });
+
+
+</script>
+
+
+</body>
+</html>

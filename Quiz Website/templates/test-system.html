@@ -1,0 +1,210 @@
+{% extends "base.html" %}
+{% block questions %}
+<br>
+<h1 class="text-center">Test System</h1>
+<br>
+
+<!--question format-->
+
+<div class="card" style="margin: 20px 20px 20px 20px;">
+    <div class="card-header" role="tab" id="headingOne"
+         style="display: flex; align-items: center; justify-content: space-between;">
+        <h5 class="mb-0" id="question-no">Question </h5>
+        <a href="" class="top_collapse_link open">
+
+            <svg height="25" class="main_collapse question_collapse fa-compress" xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 0 512 512">
+                <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                <path d="M456 224H312c-13.3 0-24-10.7-24-24V56c0-9.7 5.8-18.5 14.8-22.2s19.3-1.7 26.2 5.2l40 40L442.3 5.7C446 2 450.9 0 456 0s10 2 13.7 5.7l36.7 36.7C510 46 512 50.9 512 56s-2 10-5.7 13.7L433 143l40 40c6.9 6.9 8.9 17.2 5.2 26.2s-12.5 14.8-22.2 14.8zm0 64c9.7 0 18.5 5.8 22.2 14.8s1.7 19.3-5.2 26.2l-40 40 73.4 73.4c3.6 3.6 5.7 8.5 5.7 13.7s-2 10-5.7 13.7l-36.7 36.7C466 510 461.1 512 456 512s-10-2-13.7-5.7L369 433l-40 40c-6.9 6.9-17.2 8.9-26.2 5.2s-14.8-12.5-14.8-22.2V312c0-13.3 10.7-24 24-24H456zm-256 0c13.3 0 24 10.7 24 24V456c0 9.7-5.8 18.5-14.8 22.2s-19.3 1.7-26.2-5.2l-40-40L69.7 506.3C66 510 61.1 512 56 512s-10-2-13.7-5.7L5.7 469.7C2 466 0 461.1 0 456s2-10 5.7-13.7L79 369 39 329c-6.9-6.9-8.9-17.2-5.2-26.2s12.5-14.8 22.2-14.8H200zM56 224c-9.7 0-18.5-5.8-22.2-14.8s-1.7-19.3 5.2-26.2l40-40L5.7 69.7C2 66 0 61.1 0 56s2-10 5.7-13.7L42.3 5.7C46 2 50.9 0 56 0s10 2 13.7 5.7L143 79l40-40c6.9-6.9 17.2-8.9 26.2-5.2s14.8 12.5 14.8 22.2V200c0 13.3-10.7 24-24 24H56z"/>
+            </svg>
+        </a>
+    </div>
+
+    <div id="collapse61" class="q_collapse show" role="tabpanel" aria-labelledby="headingOne"
+         style="padding: 10px 20px 10px 30px;">
+        <div class="card-block">
+            <div class="row question_block q-61">
+                <div class="col-sm-12">
+                    <div class="question_text" id="question-text">
+                        <p>
+                            title<br>
+
+                        </p>
+                    </div>
+
+                    <br>
+                    <ul class="choices-list list-unstyled" id="options">
+                        <!--Options - radio buttons-->
+                        <li class="choice">
+                            <input type="radio" name="choice"  value="a">
+                            <label >option 1</label>
+                        </li>
+                        <li class="choice">
+                            <input type="radio" name="choice"  value="b">
+                            <label >option 1</label>
+                        </li>
+                        <li class="choice">
+                            <input type="radio" name="choice"  value="c">
+                            <label >option 1</label>
+                        </li>
+                        <li class="choice">
+                            <input type="radio" name="choice"  value="d">
+                            <label >option 1</label>
+                        </li>
+                        <li class="choice">
+                            <input type="radio" name="choice"  value="e">
+                            <label >option 1</label>
+                        </li>
+
+
+
+                    </ul>
+
+
+                    <br>
+
+                    <div class="divider"></div>
+
+                </div>
+                <div class="col-sm-12 answer_container">
+
+
+                    <button class="btn btn-info next_question d-print-none" id="next-question" style="margin: 3px">Next
+                        Question <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+                    <button hidden class="btn" id="view-result" style="margin: 3px; background: lime">Show Result <i class="fa-solid fa-square-poll-vertical"></i></button>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<br>
+<br>
+
+<script>
+
+
+
+    function option_change(text, option_x){
+        option_a = document.querySelector('input[name="choice"][value="' + option_x + '"]');
+        option_a_label = option_a.nextElementSibling;
+        option_a_label.innerHTML = text;
+    }
+
+
+
+    // make a function to display question
+    function display_question(question_x, question_no) {
+        question_x_no = document.getElementById('question-no');
+        question_x_no.innerHTML = "Question " + question_no;
+
+        question_x_text = document.getElementById('question-text');
+        question_x_text.innerHTML = question_x[1];
+
+        // input having name choice and value a
+        option_change(question_x[2], 'a');
+        option_change(question_x[3], 'b');
+        option_change(question_x[4], 'c');
+        option_change(question_x[5], 'd');
+        option_change(question_x[6], 'e');
+
+
+    }
+
+
+    questions_data = {{questions | safe }};
+
+    console.log(questions_data);
+
+    // select random 10 questions from questions_data
+    var random_questions = [];
+    var no_of_questions = 10;
+
+    for (var i = 0; i < no_of_questions; i++) {
+        var random_index = Math.floor(Math.random() * questions_data.length);
+        random_questions.push(questions_data[random_index]);
+        questions_data.splice(random_index, 1);
+    }
+    console.log(random_questions);
+
+    // display questions and on click next question display next question
+    var question_no = 1;
+    display_question(random_questions[question_no - 1], question_no);
+
+    // on click next question display next question
+    var next_question = document.getElementById('next-question');
+
+    // next question button disabled until an option is selected
+    next_question.disabled = true;
+    var options = document.querySelectorAll('input[name="choice"]');
+
+
+
+
+
+    options.forEach(function (option) {
+        option.addEventListener('change', function () {
+            next_question.disabled = false;
+        });
+    });
+
+    results = [];
+
+    next_question.addEventListener('click', function () {
+        // if question_no == no_of_questions then display result and hide next question button
+        if (question_no == 1) {
+            // display result
+            // hide next question button
+            next_question.style.display = "none";
+            view_result = document.getElementById('view-result');
+            // show view result button
+            view_result.style.display = "block";
+            view_result.hidden = false;
+
+
+
+        } else {
+            question_no += 1;
+            display_question(random_questions[question_no - 1], question_no);
+            // checked option print
+            checked_option = document.querySelector('input[name="choice"]:checked');
+
+            answer_option = random_questions[question_no - 2][7];
+            answer_option = answer_option.toLowerCase();
+
+
+            if (checked_option.value == answer_option){
+                results.push(1);
+            }
+            else{
+                results.push(0);
+            }
+
+
+            options.forEach(function (option) {
+                option.checked = false;
+            });
+            next_question.disabled = true;
+        }
+
+
+
+
+
+
+    });
+
+
+    // display first question
+
+
+</script>
+
+
+{% endblock %}

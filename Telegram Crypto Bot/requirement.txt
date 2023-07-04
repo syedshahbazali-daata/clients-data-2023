@@ -1,0 +1,13 @@
+1746291167
+7vs8nt7w
+
+
+
+# Telergam and Binance
+
+
+# --> Telegram messages
+# --> Telegram alert Message convert to Binance order details
+# --> Binance order details convert to Placing order  (Most Hard thing)
+
+# ---> Web App

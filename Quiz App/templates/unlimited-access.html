@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+{% block questions %}
+<style>
+    h1, h2, h3, h4, h5, h6 {
+
+        
+        font-weight: 600;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+
+        
+        font-weight: 600;
+    }
+
+    .price {
+        font-size: 32px;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        color: #4e4e4e;
+        
+        font-weight: 600;
+    }
+
+    .button {
+        background: #3D4C53;
+        margin: 20px auto;
+        width: 200px;
+        height: 50px;
+        overflow: hidden;
+        font-weight: 600;
+        text-align: center;
+        transition: .2s;
+        cursor: pointer;
+        border-radius: 3px;
+        box-shadow: 0px 1px 2px rgba(0, 0, 0, .2);
+    }
+
+    .btnText {
+        color: white;
+        transition: .3s;
+        text-transform: uppercase;
+
+    }
+
+    .btnText2 {
+        margin-top: 63px;
+        margin-right: -120px;
+        color: #FFF;
+
+    }
+
+    .button:hover .btnTwo {
+        left: -130px;
+    }
+
+    .button:hover .btnText {
+        margin-left: 65px;
+    }
+
+    .button:active {
+        box-shadow: 0px 5px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .btnTwo {
+        position: relative;
+        width: 165px;
+        height: 100px;
+        margin-top: -100px;
+        padding-top: 3px;
+        background: #0072c6;
+        left: -250px;
+        transition: .3s;
+    }
+
+
+
+    h4 {
+
+        color: #e24f43;
+        font-weight: 400;
+        margin-top: 0;
+    }
+
+    .h1, h1 {
+
+        font-weight: 700;
+        margin: 0;
+    }
+</style>
+<br>
+<h1 class="text-center">Unlimited Access</h1>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 text-center">
+            <ul class="list-group">
+                <li class="list-group-item heading">
+                    <h1 class="list-group-item-heading">Silver</h1>
+                    <h4 class="list-group-item-heading">Monthly</h4><span class="price">$50</span>
+                </li>
+                <li class="list-group-item"><span>5 Gb Disk Space</span></li>
+                <li class="list-group-item"><span>1 Gb Dadicated Ram</span></li>
+                <li class="list-group-item"><span>10 Addon Domain</span></li>
+                <li class="list-group-item"><span>10 Email Account</span></li>
+                <li class="list-group-item"><span>24/7 Support</span></li>
+                <li class="list-group-item">
+                    <div class="button buy-now">
+                        <p style="margin: 15px" class="btnText">Buy Now</p>
+                        <div class="btnTwo">
+                            <p  class="btnText2"><i class="fa fa-plus" aria-hidden="true"></i></p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-6 text-center">
+            <ul class="list-group">
+                <li class="list-group-item heading">
+                    <h1 class="list-group-item-heading">Gold </h1>
+                    <h4 class="list-group-item-heading">Annual</h4><span class="price">$500</span>
+                </li>
+                <li class="list-group-item"><span>5 Gb Disk Space</span></li>
+                <li class="list-group-item"><span>1 Gb Dadicated Ram</span></li>
+                <li class="list-group-item"><span>10 Addon Domain</span></li>
+                <li class="list-group-item"><span>10 Email Account</span></li>
+                <li class="list-group-item"><span>24/7 Support</span></li>
+                <li class="list-group-item">
+                    <div class="button buy-now">
+                        <p style="margin: 15px" class="btnText">Buy Now</p>
+                        <div class="btnTwo">
+                            <p  class="btnText2"><i class="fa fa-plus" aria-hidden="true"></i></p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+<br>
+<br>
+
+{% endblock %}

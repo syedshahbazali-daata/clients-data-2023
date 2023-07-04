@@ -1,0 +1,11 @@
+-> Git configuration
+1-) git config --global user.name "Your Name" (Your name)
+2-) git config --global user.email "Your Email" (Your email)
+
+check your configuration
+git config --list: but I can't exit from this command
+email: git config user.email
+
+token: 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
+private repo: https://github.com/syedshahbazali-daata/Clients-Projects-2023.git
+-> https://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@github.com/syedshahbazali-daata/Clients-Projects-2023.git

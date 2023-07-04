@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>YoutubeGoogleSheet</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        select, input[type="text"], input[type="submit"] {
+            margin-bottom: 10px;
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+
+        }
+    </style>
+</head>
+<body>
+
+    <!-- make a div top of the page -->
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100px; background-color: #ccc; display: block; justify-content: center; align-items: center; text-align: center;">
+        <p id="video-title"></p>
+        <h1 id="views-count">UPDATING..</h1>
+    </div>
+
+
+
+
+
+    <form action="#" method="POST">
+        <!-- current playlist url: https://www.youtube.com/playlist?list=PLWKjhJtqVAbnZtkAI3BqcYxKnfWn_C704 -->
+        <!-- current live video id: https://www.youtube.com/watch?v=5qap5aO4i9A -->
+
+        <h1>Youtube Google Sheet</h1>
+
+
+
+
+        <select name="type">
+            <option value="playlist">PLAYLIST</option>
+            <option value="live">LIVE VIDEO</option>
+        </select>
+        <input type="text" name="url" placeholder="Enter PLAYLIST URL" required>
+        <input type="submit" value="Submit">
+
+        <!-- current playlist url: in bold -->
+        <br>
+        <span><b>current playlist: <a href="{{ playlist_url }}" target="_blank">click</a></b></span>
+        <span><b>current live video: <a href="{{ live_video_url }}" target="_blank">click</a></b></span>
+        <br>
+        <!-- open url on click button current url '/update-sheet' -->
+        <button onclick="window.open('/update-sheet', '_self')">UPDATE SHEET</button>
+
+
+
+
+    </form>
+    <script>
+        // Dynamically change the placeholder based on the selected option
+        const selectElement = document.querySelector('select[name="type"]');
+        const inputElement = document.querySelector('input[name="url"]');
+
+        selectElement.addEventListener('change', function() {
+            if (this.value === "playlist") {
+                inputElement.placeholder = "Enter PLAYLIST URL";
+            } else if (this.value === "live") {
+                inputElement.placeholder = "Enter LIVE VIDEO ID";
+            }
+        });
+
+
+        // send ajax request to server to get the views count and video title (refresh every 10 seconds)
+        setInterval(function() {
+            $.ajax({
+                url: "live-data",
+                type: "GET",
+                success: function(response) {
+                    console.log(response);
+
+                    // {'title': 'Tere Bin Episode 49 Promo | Wednesday & Thursday at 8:00 PM On Har Pal Geo', 'views': 4527804}
+                    $('#video-title').text(response.title);
+                    $('#views-count').text('Views: ' + response.views);
+
+
+                }
+            });
+        }, 5000);
+
+
+    </script>
+</body>
+</html>

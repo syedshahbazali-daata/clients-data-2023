@@ -1,0 +1,19 @@
+-Click bot
+
+1 round: serach with keyword up to page 10. IF cannot found it on page 10, click edited link
+Sleep
+Round 2: click edited direct link|
+Sleep
+Round 3: Click twitter link
+
+Go back to round 1
+
+12 mins sleep time
+
+
+Add to cart:
+
+Same. 
+
+For twitter and direct link, i can enter them good doc as well. Or whatever is easy for you
+

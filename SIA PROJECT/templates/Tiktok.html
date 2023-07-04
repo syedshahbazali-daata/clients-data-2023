@@ -1,0 +1,687 @@
+<!doctype html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/css/Home.css">
+    <title>Bootstrap demo</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+          integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .form-container {
+            width: 100vw;
+            height: 100vh;
+            background-color: #0052CF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .upload-files-container {
+            background-color: #f7fff7;
+            width: 100%;
+            height: 70%;
+            padding: 30px 60px;
+            margin-bottom: 20px;
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 10px 20px, rgba(0, 0, 0, 0.28) 0px 6px 6px;
+        }
+
+        .drag-file-area {
+            border: 2px dashed #0052CF;
+            border-radius: 40px;
+            margin: 10px 0 15px;
+            padding: 30px 50px;
+            width: 350px;
+            text-align: center;
+        }
+
+        .drag-file-area .upload-icon {
+            font-size: 50px;
+        }
+
+        .drag-file-area h3 {
+            font-size: 26px;
+            margin: 15px 0;
+        }
+
+        .drag-file-area label {
+            font-size: 19px;
+        }
+
+        .drag-file-area label .browse-files-text {
+            color: #0052CF;
+            font-weight: bolder;
+            cursor: pointer;
+        }
+
+        .browse-files span {
+            position: relative;
+            top: -25px;
+        }
+
+        .default-file-input {
+            opacity: 0;
+        }
+
+        .cannot-upload-message {
+            background-color: #ffc6c4;
+            font-size: 17px;
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+            padding: 5px 10px 5px 30px;
+            border-radius: 5px;
+            color: #BB0000;
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .cannot-upload-message span, .upload-button-icon {
+            padding-right: 10px;
+        }
+
+        .cannot-upload-message span:last-child {
+            padding-left: 20px;
+            cursor: pointer;
+        }
+
+        .file-block {
+            color: #f7fff7;
+            background-color: #0052CF;
+            transition: all 1s;
+            width: 390px;
+            position: relative;
+            display: none;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0 15px;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            font-size: 15px;
+        }
+
+        .file-icon {
+            margin-right: 10px;
+        }
+
+        .file-name, .file-size {
+            padding: 0 3px;
+        }
+
+        .remove-file-icon {
+            cursor: pointer;
+        }
+
+        .progress-bar {
+            display: flex;
+            position: absolute;
+            bottom: 0;
+            left: 4.5%;
+            width: 0;
+            height: 5px;
+            border-radius: 25px;
+            background-color: #4BB543;
+        }
+
+        .upload-button {
+            font-family: 'Montserrat';
+            background-color: #0052CF;
+            color: #f7fff7;
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+            border: none;
+            border-radius: 20px;
+            margin: 10px;
+            padding: 7.5px 50px;
+            cursor: pointer;
+        }
+
+
+        .dropdown-toggle::after {
+            display: none;
+        }
+
+        .dropdown-menu::before {
+            content: "";
+            border: 8px solid transparent;
+            border-bottom-color: white;
+            position: absolute;
+            top: -16px;
+            left: 86%;
+            transform: translateX(-50%);
+        }
+
+        #body-background {
+            background: linear-gradient(to bottom, rgba(0, 98, 245, 255), rgba(0, 0, 1, 255));
+            border-radius: 12px;
+            width: 100%;
+            height: 100%;
+            /*    align centre*/
+            margin: 0 auto;
+            position: relative;
+            /*    scrollable False*/
+            overflow: hidden;
+
+        }
+
+        .dropdown-item i {
+            margin-right: 0.5rem;
+        }
+
+        .nav-link:hover {
+            color: #fff;
+
+        }
+
+        /*nav-link if it is active then make it white and underline 5px */
+        .nav-link.active {
+            color: #fff;
+            border-bottom: 1px solid #fff;
+            width: max-content;
+        }
+
+
+    </style>
+</head>
+<body id="body-background">
+
+<!------------------------------------ Header ------------------------------------>
+<!--make a header div -->
+<div class="d-flex flex-row justify-content-between align-items-center p-3"
+     style="background-color: rgba(0, 0, 0, 0.59);">
+
+    <img src="../static/images/logo.png" alt="Logo" class="img-fluid" style="max-height: 60px; margin-left: 20px;">
+
+    <ul class="nav">
+        <li class="nav-item">
+
+            <a class="nav-link " aria-current="page" href="/sia_home">OnlyFans</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="/tiktok_page">TitTok</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Youtube</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Instagram</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/twitter_page">Twitter</a>
+        </li>
+
+    </ul>
+
+    <div class="d-flex flex-row justify-content-end align-items-center" style="margin-right: 5px;">
+
+        <!--make text like navbar-->
+
+
+        <!--make it horizontal navbar using bootstrap -->
+
+
+    </div>
+
+
+    <!-- make div on right side having 2 spheres buttons -->
+    <div class="d-flex flex-row justify-content-end align-items-center" style="margin-right: 30px;">
+
+
+        <!--two texts 1 on top and 1 on bottom-->
+        <div style="position: absolute; top: 23px; margin-right: 90px;">
+
+            <h5 style="color: white;  margin-bottom: 0px; ">Muhammad Ali</h5>
+            <p style="color: black; font-size: 12px; margin-top: 2px; background-color: #00FF00FF; border-radius: 5px; width: max-content; padding: 2px 5px 2px 5px">
+                Premium</p>
+        </div>
+
+
+        <!--make a image dropdown-->
+        <div class="dropdown">
+            <button class="btn btn-secondary  dropdown-toggle" type="button" id="user"
+                    data-bs-toggle="dropdown" aria-expanded="false"
+                    style="background: orange; border: none; border-radius: 50%; width: 60px; height: 60px; font-weight: bold">
+                M
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li>
+
+                    <a class="dropdown-item" href="#">
+                        <i class="fa-solid fa-user"></i>Profile</a></li>
+                <li>
+
+                    <a class="dropdown-item" href="#">
+                        <i class="fa-solid fa-gear"></i>Settings</a>
+                </li>
+                <li><a class="dropdown-item" href="#">
+                    <i class="fa-solid fa-chart-simple"></i>
+                    Analytics</a></li>
+                <li><a class="dropdown-item" href="#">
+                    <i class="fa-solid fa-headset"></i>
+                    Contact Us</a></li>
+
+                <li><a class="dropdown-item" href="#" style="font-weight: bold">
+
+                    Log Out</a></li>
+            </ul>
+        </div>
+
+
+    </div>
+
+
+</div>
+
+<!------------------------------------ Body ------------------------------------>
+
+<!--make a container having 1 row and 2 columns and  any element you want to add in the container and will not break the layout-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-9">
+            <h2 style="color: white; font-size: 35px; margin-left: 0px; font-weight: 750;   width: 100%; text-align: left
+; margin-top: 10px">
+                Destrukter</h2>
+
+            <hr style="width: 90%; margin-top: 10px; height: 4px; background-color: white;">
+
+            <!--      make select box-->
+            <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined"
+                  rel="stylesheet">
+
+            <div class="upload-files-container">
+                <div class="drag-file-area">
+                    <span class="material-icons-outlined upload-icon"> file_upload </span>
+                    <h3 class="dynamic-message"> Drag & drop any file here </h3>
+                    <!--                    <label class="label"> or <span class="browse-files"> <input type="file"-->
+                    <!--                                                                                class="default-file-input"/> <span-->
+                    <!--                            class="browse-files-text">browse file</span> <span>from device</span> </span> </label>-->
+
+                    <span class="label">or</span>
+                    <span class="browse-files">
+
+
+                        <span class="browse-files-text" style="color: #0052CF">
+                            <input type="file" class="default-file-input"/> browse file
+                        </span>
+                        <span>from device</span>
+                    </span>
+
+                </div>
+                <span class="cannot-upload-message"> <span class="material-icons-outlined">error</span> Please select a file first <span
+                        class="material-icons-outlined cancel-alert-button">cancel</span> </span>
+                <div class="file-block">
+                    <div class="file-info"><span class="material-icons-outlined file-icon">description</span> <span
+                            class="file-name"> </span> | <span class="file-size">  </span></div>
+                    <span class="material-icons remove-file-icon">delete</span>
+                    <div class="progress-bar"></div>
+                </div>
+                <button type="button" class="upload-button"> Upload</button>
+            </div>
+
+
+        </div>
+
+        <!--     border radius 4 sides 0px, 0px, 12px, 12px;-->
+
+        <div class="col-md-3"
+             style="  background-color: rgba(0, 0, 0, 0.29); border-radius: 0px 0px 12px 12px; height: 100vh;">
+
+
+            <h2 style="color: white; font-size: 30px; margin-left: 0px; font-weight: 750; margin-top: 5%;  width: 100%; text-align: right">
+                Videos Listed</h2>
+
+            <hr style="width: 100%; margin-top: 10px; height: 4px; background-color: white;">
+
+            <!--  make a scrollable div -->
+
+            <div class="scrollable-div" style="width: 100%; height: 57%;  overflow-y: scroll; margin-top: 10px">
+                <!--make schedule cards-->
+
+                {% for i in schedules_data %}
+                <div class="customQListItem" aria-label="non-selected">
+                    <div class="bg">
+                        <p class="label-index" style="text-align: center; width: 100%">{{i["index"]}}</p>
+                    </div>
+                    <div class="upload-details">
+                        <span class="label-date">{{i["post_date"]}} at {{i["post_time"]}}</span>
+                        <br>
+                        <span class="label-price" style="color: #0f0;  ">Price: {{i["price"]}}$</span>
+                    </div>
+                </div>
+                {% endfor %}
+
+
+            </div>
+
+
+            <div style="margin-top: 10px; height: fit-content">
+                <button type="button" class="home-page-btn" id="delete_data"
+                        style=" width: 100%; border-radius: 12px; background-color:white ;font-size: 15px; font-weight: 600; padding-top: 10px; padding-bottom: 10px; margin-bottom: 5px;">
+                    DELETE
+                </button>
+
+
+
+                <form method="POST">
+                    <button type="submit" class="home-page-btn"
+                            style="color: white; font-weight: bold; width: 100%; border-radius: 12px; background-color: rgb(255, 67, 67);font-size: 15px; font-weight: 600; padding-top: 10px; padding-bottom: 10px; margin-bottom: 5px;">
+                        <i class="fa-solid fa-play"></i>
+                        Run
+                    </button>
+
+
+                </form>
+
+
+                <!--Send Ajax request when Add to Schedule button is clicked without reloading the page-->
+                <script>
+                    // schedule_data is the id of the button
+
+                    document.getElementById("schedule_data").addEventListener("click", function () {
+                        // get the value of the selected option
+
+                        // change text of the button
+
+
+                        var uploading_method = document.getElementById("uploading-method").value;
+                        var interval = document.getElementById("interval").value;
+                        const dateInput = document.querySelector('input[type="date"]');
+                        var date = dateInput.value;
+                        const timeInput = document.querySelector('input[type="time"]');
+                        var time = timeInput.value;
+
+                        // ------------------- Required
+                        var description_type = document.getElementById("description-type").value;
+                        if (description_type == 1) {
+                            var description = document.getElementById("description").value;
+                            var ai_generated = "false"
+                        } else {
+                            var description = "false"
+                            var ai_generated = "true"
+                        }
+
+                        var price = document.getElementById("price").value;
+
+                        const input = document.getElementById('media'); // Get the input element by its ID
+                        const files = input.files; // Get the FileList object containing selected files
+                        const formData = new FormData(); // Create a FormData object to store the file data
+
+                        for (let i = 0; i < files.length; i++) {
+                            formData.append("files", files[i]); // Add each file to the FormData object
+                            console.log(files[i]);
+                        }
+
+                        // if date is not selected and uploading method is 2 then show alert
+                        if (date == "" && uploading_method == 2 && time == "") {
+                            alert("Please select date and time");
+                            return;
+                        }
+
+                        if (uploading_method == 1) {
+                            time = "false"
+                            date = "false"
+
+                        } else {
+                            interval = "false"
+                        }
+
+                        // if there is no media selected then show alert
+                        if (files.length == 0) {
+                            alert("Please select media");
+
+
+                            return;
+                        }
+
+                        console.log([uploading_method, interval, date, time, description_type, description, ai_generated, price]);
+                        document.getElementById("schedule_data").innerHTML = "Adding to Schedule";
+                        // disable the button
+                        document.getElementById("schedule_data").disabled = true;
+
+                        // var time = document.getElementById("time").value;
+                        // send ajax request
+                        console.log(uploading_method);
+                        console.log(interval);
+                        console.log(date);
+                        console.log(time);
+
+                        formData.append("uploading_method", uploading_method);
+                        formData.append("interval", interval);
+                        formData.append("date", date);
+                        formData.append("time", time);
+                        formData.append("description_type", description_type);
+                        formData.append("description", description);
+                        formData.append("ai_generated", ai_generated);
+                        formData.append("price", price);
+
+                        $.ajax({
+                            url: "/schedule_data",
+                            type: "POST",
+                            data: formData, // Use the FormData object as the request data
+                            contentType: false, // Don't set the Content-Type header since it will be set automatically
+                            processData: false, // Don't process the data since it's already in the correct format
+                            success: function (response) {
+                                // refresh the page
+                                location.reload();
+                                // change text of the button
+                                document.getElementById("schedule_data").innerHTML = "Add to Schedule";
+                                // enable the button
+                                document.getElementById("schedule_data").disabled = false;
+
+
+                            },
+                            error: function (error) {
+                                console.log(error);
+                            }
+                        });
+                    });
+                </script>
+
+                <script>
+                    // when I click on customQListItem it's border raius color will be changed
+                    const customQListItem = document.querySelectorAll('.customQListItem');
+                    customQListItem.forEach((item) => {
+                        item.addEventListener('click', (event) => {
+                            customQListItem.forEach((item) => {
+                                item.style.border = "1px solid white";
+                                // change the aria-label to non-selected
+                                item.setAttribute("aria-label", "non-selected");
+                            });
+                            item.style.border = "1px solid #0f0";
+                            // change the aria-label to selected
+                            item.setAttribute("aria-label", "selected");
+
+                        });
+                    });
+
+                    // delete_data id button click event
+                    document.getElementById("delete_data").addEventListener("click", function () {
+                        // get the selected item
+                        const selectedItem = document.querySelector('[aria-label="selected"]');
+                        // get the index of selected item
+                        const index = selectedItem.querySelector('.label-index').innerHTML;
+                        // send the index to delete_data url
+
+
+                        $.ajax({
+                            url: '/delete_schedule',
+                            type: 'POST',
+                            data: {
+                                index: index
+                            },
+                            success: function (data) {
+                                // reload the page
+                                location.reload();
+                            }
+                        });
+                    });
+
+
+                </script>
+
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<!------------------------------------ Footer ------------------------------------>
+
+<script>
+    var isAdvancedUpload = function () {
+        var div = document.createElement('div');
+        return (('draggable' in div) || ('ondragstart' in div && 'ondrop' in div)) && 'FormData' in window && 'FileReader' in window;
+    }();
+
+    let draggableFileArea = document.querySelector(".drag-file-area");
+    let browseFileText = document.querySelector(".browse-files");
+    let uploadIcon = document.querySelector(".upload-icon");
+    let dragDropText = document.querySelector(".dynamic-message");
+    let fileInput = document.querySelector(".default-file-input");
+    let cannotUploadMessage = document.querySelector(".cannot-upload-message");
+    let cancelAlertButton = document.querySelector(".cancel-alert-button");
+    let uploadedFile = document.querySelector(".file-block");
+    let fileName = document.querySelector(".file-name");
+    let fileSize = document.querySelector(".file-size");
+    let progressBar = document.querySelector(".progress-bar");
+    let removeFileButton = document.querySelector(".remove-file-icon");
+    let uploadButton = document.querySelector(".upload-button");
+    let fileFlag = 0;
+
+    fileInput.addEventListener("click", () => {
+        fileInput.value = '';
+        console.log(fileInput.value);
+    });
+
+    fileInput.addEventListener("change", e => {
+        console.log(" > " + fileInput.value)
+        uploadIcon.innerHTML = 'check_circle';
+        dragDropText.innerHTML = 'File Dropped Successfully!';
+        document.querySelector(".label").innerHTML = `drag & drop or <span class="browse-files"> <input type="file" class="default-file-input" style=""/> <span class="browse-files-text" style="top: 0;"> browse file</span></span>`;
+        uploadButton.innerHTML = `Upload`;
+        fileName.innerHTML = fileInput.files[0].name;
+        fileSize.innerHTML = (fileInput.files[0].size / 1024).toFixed(1) + " KB";
+        uploadedFile.style.cssText = "display: flex;";
+        progressBar.style.width = 0;
+        fileFlag = 0;
+    });
+
+    uploadButton.addEventListener("click", () => {
+        let isFileUploaded = fileInput.value;
+        if (isFileUploaded != '') {
+            if (fileFlag == 0) {
+                fileFlag = 1;
+                var width = 0;
+                var id = setInterval(frame, 50);
+
+                function frame() {
+                    if (width >= 390) {
+                        clearInterval(id);
+                        uploadButton.innerHTML = `<span class="material-icons-outlined upload-button-icon"> check_circle </span> Uploaded`;
+                    } else {
+                        width += 5;
+                        progressBar.style.width = width + "px";
+                    }
+                }
+            }
+        } else {
+            cannotUploadMessage.style.cssText = "display: flex; animation: fadeIn linear 1.5s;";
+        }
+    });
+
+    cancelAlertButton.addEventListener("click", () => {
+        cannotUploadMessage.style.cssText = "display: none;";
+    });
+
+    if (isAdvancedUpload) {
+        ["drag", "dragstart", "dragend", "dragover", "dragenter", "dragleave", "drop"].forEach(evt =>
+            draggableFileArea.addEventListener(evt, e => {
+                e.preventDefault();
+                e.stopPropagation();
+            })
+        );
+
+        ["dragover", "dragenter"].forEach(evt => {
+            draggableFileArea.addEventListener(evt, e => {
+                e.preventDefault();
+                e.stopPropagation();
+                uploadIcon.innerHTML = 'file_download';
+                dragDropText.innerHTML = 'Drop your file here!';
+            });
+        });
+
+        draggableFileArea.addEventListener("drop", e => {
+            uploadIcon.innerHTML = 'check_circle';
+            dragDropText.innerHTML = 'File Dropped Successfully!';
+            document.querySelector(".label").innerHTML = `drag & drop or <span class="browse-files"> <input type="file" class="default-file-input" style=""/> <span class="browse-files-text" style="top: -23px; left: -20px;"> browse file</span> </span>`;
+            uploadButton.innerHTML = `Upload`;
+
+            let files = e.dataTransfer.files;
+            fileInput.files = files;
+            console.log(files[0].name + " " + files[0].size);
+            console.log(document.querySelector(".default-file-input").value);
+            fileName.innerHTML = files[0].name;
+            fileSize.innerHTML = (files[0].size / 1024).toFixed(1) + " KB";
+            uploadedFile.style.cssText = "display: flex;";
+            progressBar.style.width = 0;
+            fileFlag = 0;
+        });
+    }
+
+    removeFileButton.addEventListener("click", () => {
+        uploadedFile.style.cssText = "display: none;";
+        fileInput.value = '';
+        uploadIcon.innerHTML = 'file_upload';
+        dragDropText.innerHTML = 'Drag & drop any file here';
+        document.querySelector(".label").innerHTML = `or <span class="browse-files"> <input type="file" class="default-file-input"/> <span class="browse-files-text">browse file</span> <span>from device</span> </span>`;
+        uploadButton.innerHTML = `Upload`;
+    });
+
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>

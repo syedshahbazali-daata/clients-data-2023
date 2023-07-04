@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Golf Bot</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+    <style>
+
+        /* bot-times div in center of page */
+        /* bot-times add padding in bottom */
+
+
+        #bot-times {
+            margin: 0 auto;
+            padding-bottom: 20px;
+        }
+
+
+    </style>
+</head>
+<!-- disable clicking on the page -->
+<body>
+
+
+
+<div class="bg-dark text-white text-center p-3" style="box-shadow: 0 0 10px 0 rgba(0,0,0,0.5);">
+    <br>
+
+    <div class="float-end">
+        {% if running != 'True' %}
+            <a href="/run-bot" class="btn btn-success">Run Bot</a>
+        {% else %}
+            <button href="/run-bot" class="btn btn-danger" disabled="disabled">Bot Running</button>
+        {% endif %}
+
+
+        <a href="/" class="btn btn-danger">Logout</a>
+
+    </div>
+    <h1 style="margin-left: 150px">@{{profile_data['username']}}</h1>
+    <br>
+    <!-- add two buttons on right side of page, one for logout and one for run bot -->
+
+
+</div>
+
+<div class="container">
+    <br>
+    <h6 class="text-center">Times Bot Will Look For Tee Times: </h6>
+    <br>
+
+
+    <!-- a div having times 4 rows and 3 columns style: box-shadow: 0 0 10px 0 rgba(0,0,0,0.5);/ background-color: #e3f2fd;/ border-radius: 10px; -->
+    <div id="bot-times" class="row row-cols-1 row-cols-md-3 g-4"
+         style="box-shadow: 0 0 10px 0 rgba(0,0,0,0.5); background-color: #e3f2fd; border-radius: 10px; width: 80%">
+
+        {% for time in available_times %}
+        <button value="{{time}}" type="button" class="btn btn-warning btn-md bot-times-btn"
+                style="margin-left: 20px; width: max-content; background: yellow">{{time}}
+        </button>
+        {% endfor %}
+
+    </div>
+
+    <script>
+        var btns_list = document.getElementsByClassName("bot-times-btn");
+        // on hover change color to red and text to white
+        for (var i = 0; i < btns_list.length; i++) {
+            btns_list[i].addEventListener("mouseover", function () {
+                this.style.backgroundColor = "red";
+                this.style.color = "white";
+            });
+            btns_list[i].addEventListener("mouseout", function () {
+                this.style.backgroundColor = "yellow";
+                this.style.color = "black";
+            });
+        }
+
+        // on click then send request to /delete/{{time}} to delete the time from the database
+
+        for (var i = 0; i < btns_list.length; i++) {
+            btns_list[i].addEventListener("click", function () {
+                var time = this.value;
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+
+                        // remove the button from the DOM
+                        var btn = document.querySelector("button[value='" + time + "']");
+                        btn.remove();
+                    }
+                };
+                xhttp.open("GET", "/delete/" + time, true);
+                xhttp.send();
+                // refresh the page
+                location.reload();
+            });
+        }
+    </script>
+
+
+    <br>
+    <br>
+
+    <!-- add select element with options for TEE TIMES  and ADD TEE TIME -->
+    <div class="row">
+        <!-- make a card having form with select element and button CENTERED -->
+
+
+        <div class="card text-center"
+             style="width: 80%; margin: 0 auto; box-shadow: 0 0 10px 0 rgba(0,0,0,0.5); background-color: #e3f2fd; border-radius: 10px;">
+            <div class="card-body">
+                <h5 class="card-title">Add Tee Times</h5>
+                <p class="card-text">Select a time and add it to the list of times the bot will look for tee times.</p>
+
+                <form method="POST">
+                    <select class="form-select" name="time">
+                        {% for time in all_times %}
+                        <option value="{{ time }}">{{ time }}</option>
+                        {% endfor %}
+                    </select>
+                    <br>
+                    <button type="submit" class="btn btn-primary btn-md">Add Time</button>
+                </form>
+
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+</body>
+</html>

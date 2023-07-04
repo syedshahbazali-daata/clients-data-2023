@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block questions %}
+
+<!-- make a table with three columns: book name and author name and download button -->
+<br>
+
+<h2 style="text-align: center;">Available PDFs</h2>
+<div class="container" >
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-hover table-bordered">
+                <thead>
+                <tr>
+                    <th scope="col">PDF Name</th>
+                    <th scope="col">Author Name</th>
+                    <th scope="col">Download</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for book in books %}
+                <tr>
+                    <td>{{book[0]}}</td>
+                    <td>{{book[1]}}</td>
+                    {% if user_type != "free" %}
+                        <td><a href="{{book[2]}}" class="btn btn-primary">Download</a></td>
+                    {% else %}
+                        <td><a href="{{book[2]}}" class="btn btn-primary disabled">Upgrade to Download</a></td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<br>
+
+{% endblock %}

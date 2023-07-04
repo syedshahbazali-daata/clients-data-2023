@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+          integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+    <style>
+
+        #body-background {
+            background: linear-gradient(to bottom, rgba(0, 98, 245, 255), rgba(0, 0, 1, 255));
+            border-radius: 12px;
+            width: 100%;
+            height: 100%;
+            /*    align centre*/
+            margin: 0 auto;
+            position: relative;
+            /*    scrollable False*/
+            overflow: hidden;
+
+        }
+    </style>
+</head>
+<body id="body-background">
+
+<!------------------------------------ Header ------------------------------------>
+<!--make a header div -->
+<div class="d-flex flex-row justify-content-between align-items-center p-3"
+     style="background-color: rgba(0, 0, 0, 0.59);">
+
+    <img src="../static/images/logo.png" alt="Logo" class="img-fluid" style="max-height: 60px; margin-left: 20px;">
+
+    <!-- make div on right side having 2 spheres buttons -->
+    <div class="d-flex flex-row justify-content-end align-items-center" style="margin-right: 30px;">
+
+        <button type="button" class="btn  mx-2 rounded-circle"
+                style="background-color: white; width: 30px; height: 30px;">
+
+        </button>
+
+        <button type="button" class="btn  mx-2 rounded-circle"
+                style="background-color: rgb(255, 67, 67); width: 30px; height: 30px;">
+
+        </button>
+
+
+    </div>
+
+
+</div>
+
+
+<!------------------------------------ Body ------------------------------------>
+
+
+<!--make a div having a image and H1 horizontally -->
+<div style="
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-top: 90px;
+" class="container-fluid align-left">
+    <img src="../static/images/onlyFan_logo.png" alt="SIA Start Screen" style="width: 10%;" class="img-fluid"
+         id="image-slider">
+
+
+    <div>
+        <!--        h1 with this OnlyFans newline then Automation-->
+        <h1 id="text-slider" style="color: white; font-size: 50px; margin-left: 0px; font-weight: 800">OnlyFans<br>Automation
+        </h1>
+
+
+    </div>
+
+
+</div>
+<!--make a div all content centre aligned-->
+<div style="
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-top: 10px;">
+
+    <div style=" width: 50%; height: 1px; background-color: white; opacity: 0.4"></div>
+
+
+</div>
+
+<!--make a div having a image and H1 horizontally -->
+<div style="
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-top: 25px;
+" class="align-items-center">
+    <p style="color: white; font-size: 20px; margin-left: 0px; font-weight: 450; text-align: center; margin-bottom: 20px; width: 35%">
+        Open chrome in another window and Login/Sign up into your Social Media Accounts
+    </p>
+
+</div>
+<div style="
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-top: 60px;">
+    <!--<button id="start-button" style="width: 10%;">START</button>-->
+    <button class="btn" id="start-btn"
+            style="background-color: rgb(255, 67, 67); color: white; font-size: 20px; font-weight: 600; width: 200px; height: 50px; border-radius: 70px">
+        START
+    </button>
+    <!-- make a progress bar -->
+    <div hidden class="progress"
+         style="width: 600px; height: 20px; margin-top: 10px; margin-left: 10px; border-radius: 70px">
+        <div class="progress-bar progress-bar progress-bar-animated" role="progressbar" aria-valuenow="75"
+             aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+    </div>
+
+</div>
+
+
+<script>
+    // Progress bar
+    // click on start button to start-btn and hide start button and show progress bar and start the progress bar from 0 to 100
+    document.getElementById("start-btn").addEventListener("click", function () {
+        document.getElementById("start-btn").hidden = true;
+        document.getElementsByClassName("progress")[0].hidden = false;
+        let progress = 0;
+        let interval = setInterval(function () {
+
+            // progress bar will increase randomly by 1 to 7
+            progress += Math.floor(Math.random() * 7) + 1;
+
+
+            document.getElementsByClassName("progress-bar")[0].style.width = progress + "%";
+            if (progress >= 100) {
+                clearInterval(interval);
+                window.location.href = "/sia_login";
+            }
+        }, 100);
+    });
+
+
+    // image-slider change image to tiktok_logo.png after 2 seconds with fade effect and also change text-slider to tiktok
+
+    var imageSlider = document.getElementById("image-slider");
+    var textSlider = document.getElementById("text-slider");
+
+
+    // apply fade effect to image
+
+    // change image after 2 seconds
+
+    // loop for changing image and text after 2 seconds
+
+    var i = 0;
+
+
+    function changeImage() {
+        setTimeout(function () {
+            // time sleep for 1 second
+
+
+            if (i === 0) {
+                imageSlider.src = "../static/images/tiktok_logo.png";
+                textSlider.innerHTML = "TikTok<br>Automation";
+                i = 1;
+            } else if (i === 1) {
+                imageSlider.src = "../static/images/yt_logo.png";
+                textSlider.innerHTML = "Youtube<br>Automation";
+                i = 2;
+            } else if (i === 2) {
+                imageSlider.src = "../static/images/onlyFan_logo.png";
+                textSlider.innerHTML = "OnlyFans<br>Automation";
+                i = 0;
+            }
+            imageSlider.style.opacity = 1;
+            changeImage();
+        }, 2000);
+    }
+
+    changeImage();
+
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>

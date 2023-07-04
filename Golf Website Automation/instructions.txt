@@ -1,0 +1,21 @@
+  _____           _                   _   _                 
+ |_   _|         | |                 | | (_)                
+   | |  _ __  ___| |_ _ __ _   _  ___| |_ _  ___  _ __  ___ 
+   | | | '_ \/ __| __| '__| | | |/ __| __| |/ _ \| '_ \/ __|
+  _| |_| | | \__ \ |_| |  | |_| | (__| |_| | (_) | | | \__ \
+ |_____|_| |_|___/\__|_|   \__,_|\___|\__|_|\___/|_| |_|___/
+                                                            
+
+
+1-) Download Python from
+https://www.python.org/downloads/
+
+2-) Download the PYCHARM IDE (community version) from
+https://www.jetbrains.com/pycharm/download
+
+3-) install python first then install pycharm
+4-) open pycharm and create a new project
+5-) create a new python file
+6-) copy Golf Bot.py code and paste it in the python file
+7-) run the code
+8-) enjoy

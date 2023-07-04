@@ -1,0 +1,7 @@
+Follow these steps to run the script:
+
+
+1-) Download Python and also Any IDE (I prefer Pycharm)
+2-) Download chrome Browser because script will use chrome to scrape data
+3-) Chrome must have the 2captcha extension installed and also enabled by API (it's very simple)
+4-) run this Code and Enjoy

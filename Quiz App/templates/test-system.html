@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Test System</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+
+        button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 20px;
+            cursor: pointer;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+<button id="start-btn">Start Test</button>
+
+<div id="rules-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Test Rules</h2>
+        <p>1. You have 3 hours to complete the test.</p>
+        <p>2. Each question has 5 options.</p>
+        <p>3. You can go back and fix your previous answers.</p>
+        <p>4. Click the submit button to end the test and see your results.</p>
+    </div>
+</div>
+
+<div id="test-container" class="hidden">
+    <h1>Test Questions</h1>
+    <div id="questions-container">
+        <!-- Questions and options will be generated dynamically using JavaScript -->
+    </div>
+    <button id="submit-btn">Submit</button>
+</div>
+
+<div id="result-container" class="hidden">
+    <h1>Test Results</h1>
+    <div id="answers-container">
+        <!-- User's answers and correct answers will be generated dynamically using JavaScript -->
+    </div>
+    <p>Total Marks: <span id="marks"></span></p>
+</div>
+
+<script>
+    // Test questions and answers (can be stored in a separate JSON file)
+    const questions = [
+        {
+            question: "What is the capital of France?",
+            options: ["London", "Paris", "Berlin", "Rome", "Madrid"],
+            answer: "Paris"
+        },
+        {
+            question: "What is the largest ocean in the world?",
+            options: ["Atlantic", "Indian", "Arctic", "Pacific", "Antarctic"],
+            answer: "Pacific"
+        },
+        {
+            question: "Who discovered the theory of relativity?",
+            options: ["Isaac Newton", "Albert Einstein", "Galileo Galilei", "Stephen Hawking", "Marie Curie"],
+            answer: "Albert Einstein"
+        }
+    ];
+
+    // DOM elements
+    const startBtn = document.getElementById("start-btn");
+    const rulesModal = document.getElementById("rules-modal");
+    const closeBtn = document.querySelector(".close");
+    const testContainer = document.getElementById("test-container");
+    const questionsContainer = document.getElementById("questions-container");
+    const submitBtn = document.getElementById("submit-btn");
+    const resultContainer = document.getElementById("result-container");
+    const answersContainer = document.getElementById("answers-container");
+    const marksSpan = document.getElementById("marks");
+
+    // Event listeners
+    startBtn.addEventListener("click", showRulesModal);
+    closeBtn.addEventListener("click", hideRulesModal);
+    window.addEventListener("click", outsideClick);
+    submitBtn.addEventListener("click", showResults);
+
+    // Functions
+    function showRulesModal() {
+        rulesModal.style.display = "block";
+    }
+
+    function hideRulesModal() {
+        rulesModal.style.display = "none";
+        startTest();
+    }
+
+    function outsideClick(e) {
+        if (e.target == rulesModal) {
+            rulesModal.style.display = "none";
+            startTest();
+        }
+    }
+
+    function startTest() {
+        testContainer.classList.remove("hidden");
+        generateQuestions();
+        startTimer();
+    }
+
+    function generateQuestions() {
+        for (let i = 0; i < questions.length; i++) {
+            const questionDiv = document.createElement("div");
+            questionDiv.classList.add("question");
+
+            const questionP = document.createElement("p");
+            questionP.textContent = `${i + 1}. ${questions[i].question}`;
+
+            questionDiv.appendChild(questionP);
+
+            for (let j = 0; j < questions[i].options.length; j++) {
+                const optionLabel = document.createElement("label");
+                optionLabel.classList.add("option");
+
+                const optionRadio = document.createElement("input");
+                optionRadio.type = "radio";
+                optionRadio.name = `question-${i}`;
+                optionRadio.value = questions[i].options[j];
+
+                const optionSpan = document.createElement("span");
+                optionSpan.textContent = questions[i].options[j];
+
+                optionLabel.appendChild(optionRadio);
+                optionLabel.appendChild(optionSpan);
+
+                questionDiv.appendChild(optionLabel);
+            }
+
+            questionsContainer.appendChild(questionDiv);
+        }
+    }
+
+    function startTimer() {
+        const timerP = document.createElement("p");
+        timerP.textContent = "Time remaining: 3:00:00";
+        testContainer.appendChild(timerP);
+
+        let secondsRemaining = 3 * 60 * 60;
+
+        const intervalId = setInterval(() => {
+            secondsRemaining--;
+
+            const hours = Math.floor(secondsRemaining / 3600);
+            const minutes = Math.floor((secondsRemaining % 3600) / 60);
+            const seconds = secondsRemaining % 60;
+
+            timerP.textContent = `Time remaining: ${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+
+            if (secondsRemaining == 0) {
+                clearInterval(intervalId);
+                showResults();
+            }
+        }, 1000);
+    }
+
+    function showResults() {
+        testContainer.classList.add("hidden");
+        resultContainer.classList.remove("hidden");
+
+        let correctAnswers = 0;
+
+        for (let i = 0; i < questions.length; i++) {
+            const selectedOption = document.querySelector(`input[name="question-${i}"]:checked`);
+            const answerDiv = document.createElement("div");
+            answerDiv.classList.add("answer");
+
+            const questionP = document.createElement("p");
+            questionP.textContent = `${i + 1}. ${questions[i].question}`;
+
+            answerDiv.appendChild(questionP);
+
+            const userAnswerP = document.createElement("p");
+            userAnswerP.textContent = `Your answer: ${selectedOption ? selectedOption.value : "Not answered"}`;
+
+            answerDiv.appendChild(userAnswerP);
+
+            const correctAnswerP = document.createElement("p");
+            correctAnswerP.textContent = `Correct answer: ${questions[i].answer}`;
+
+            answerDiv.appendChild(correctAnswerP);
+
+            if (selectedOption && selectedOption.value == questions[i].answer) {
+                correctAnswers++;
+                answerDiv.classList.add("correct");
+            } else {
+                answerDiv.classList.add("incorrect");
+            }
+
+            answersContainer.appendChild(answerDiv);
+        }
+
+        marksSpan.textContent = `${correctAnswers} / ${questions.length}`;
+    }
+
+
+</script>
+</body>
+</html>

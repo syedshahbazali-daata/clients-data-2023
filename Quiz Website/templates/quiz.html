@@ -1,0 +1,208 @@
+{% extends "base.html" %}
+{% block questions %}
+<br>
+<h2 class="text-center">Certificate of Cloud Security Knowledge v1.0 (CCSK)</h2>
+<div style="padding: 10px">
+
+
+    {% for question in questions %}
+
+    <div class="card" style="margin-top: 20px;">
+        <div class="card-header" role="tab" id="headingOne"
+             style="display: flex; align-items: center; justify-content: space-between;">
+            <h5 class="mb-0">Question {{question[0]}}</h5>
+            <a href="" class="top_collapse_link open">
+
+                <svg height="25" class="main_collapse question_collapse fa-compress" xmlns="http://www.w3.org/2000/svg"
+                     viewBox="0 0 512 512">
+                    <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                    <path d="M456 224H312c-13.3 0-24-10.7-24-24V56c0-9.7 5.8-18.5 14.8-22.2s19.3-1.7 26.2 5.2l40 40L442.3 5.7C446 2 450.9 0 456 0s10 2 13.7 5.7l36.7 36.7C510 46 512 50.9 512 56s-2 10-5.7 13.7L433 143l40 40c6.9 6.9 8.9 17.2 5.2 26.2s-12.5 14.8-22.2 14.8zm0 64c9.7 0 18.5 5.8 22.2 14.8s1.7 19.3-5.2 26.2l-40 40 73.4 73.4c3.6 3.6 5.7 8.5 5.7 13.7s-2 10-5.7 13.7l-36.7 36.7C466 510 461.1 512 456 512s-10-2-13.7-5.7L369 433l-40 40c-6.9 6.9-17.2 8.9-26.2 5.2s-14.8-12.5-14.8-22.2V312c0-13.3 10.7-24 24-24H456zm-256 0c13.3 0 24 10.7 24 24V456c0 9.7-5.8 18.5-14.8 22.2s-19.3 1.7-26.2-5.2l-40-40L69.7 506.3C66 510 61.1 512 56 512s-10-2-13.7-5.7L5.7 469.7C2 466 0 461.1 0 456s2-10 5.7-13.7L79 369 39 329c-6.9-6.9-8.9-17.2-5.2-26.2s12.5-14.8 22.2-14.8H200zM56 224c-9.7 0-18.5-5.8-22.2-14.8s-1.7-19.3 5.2-26.2l40-40L5.7 69.7C2 66 0 61.1 0 56s2-10 5.7-13.7L42.3 5.7C46 2 50.9 0 56 0s10 2 13.7 5.7L143 79l40-40c6.9-6.9 17.2-8.9 26.2-5.2s14.8 12.5 14.8 22.2V200c0 13.3-10.7 24-24 24H56z"/>
+                </svg>
+            </a>
+        </div>
+
+        <div id="collapse61" class="q_collapse show" role="tabpanel" aria-labelledby="headingOne"
+             style="padding: 10px 20px 10px 30px;">
+            <div class="card-block">
+                <div class="row question_block q-61">
+                    <div class="col-sm-12">
+                        <div class="question_text">
+                            <p>
+                                {{question[1]}}<br>
+
+                            </p>
+                        </div>
+
+
+                        <ul class="choices-list list-unstyled">
+
+                            <li data-choice="A">
+                                <strong>A. </strong>{{question[2]}}
+                            </li>
+
+                            <li data-choice="B">
+                                <strong>B. </strong>{{question[3]}}
+                            </li>
+
+                            <li data-choice="C">
+                                <strong>C. </strong>{{question[4]}}
+                            </li>
+
+                            <li data-choice="D">
+                                <strong>D. </strong>{{question[5]}}
+                            </li>
+
+                            <li data-choice="E">
+                                <strong>E. </strong>{{question[6]}}
+                            </li>
+
+                        </ul>
+
+
+                        <br><br>
+
+                        <div class="divider"></div>
+
+                    </div>
+                    <div class="col-sm-12 answer_container">
+                        <button class="btn btn-primary show_answer">Expose Correct Answer</button>
+
+
+                        <div class="answer_block green accent-1" data-answer="C" hidden>
+                            <p>
+                                Answer :
+                                <strong>{{question[7]}}</strong>
+
+                            </p>
+                            <br>
+                            <p>
+                                Explanation :
+                                <strong>{{question[9]}}</strong>
+                            </p>
+
+
+                        </div>
+
+
+                        <button class="btn btn-info next_question d-print-none" id="next-question" style="margin: 3px">Next Question</button>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endfor %}
+
+    <!--Add extra space-->
+    <br>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="d-flex justify-content-end ml-auto">
+                <a class="btn " id="pre-page">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Previous Question
+                </a>
+                <span>&nbsp;</span>
+
+                <a class="btn " id="next-page">Next Question <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+        </div>
+        <script>
+            // if next_page_available (jinja from python) is True then update next page link to /quiz-trial/{current_page + 1} else disable the element
+
+            // get the next page link
+            next_page_available = "{{next_page_available}}";
+            console.log(next_page_available);
+            if (next_page_available === 'true') {
+                next_page_link = document.querySelector('#next-page');
+                next_page_link.href = "/quiz-trial/{{current_page + 1}}";
+            } else {
+                next_page_link = document.querySelector('#next-page');
+                next_page_link.classList.add('disabled');
+            }
+
+            // if current_page > 1 then update previous page link to /quiz-trial/{current_page - 1} else disable the element
+
+            if ({{current_page}} > 1) {
+                previous_page_link = document.querySelector('#pre-page');
+                previous_page_link.href = "/quiz-trial/{{current_page - 1}}";
+            } else {
+                previous_page_link = document.querySelector('#pre-page');
+                previous_page_link.classList.add('disabled');
+            }
+
+            // if next_question button is clicked then close the card
+            next_question = document.querySelectorAll('.next_question');
+
+
+
+
+
+
+
+
+
+        </script>
+
+    </div>
+
+
+</div>
+<script>
+    // if show_answer button is clicked
+    show_answer = document.querySelectorAll('.show_answer');
+    show_answer.forEach(function (element) {
+        element.addEventListener('click', function () {
+            // get the answer block
+            answer_block = this.parentElement.querySelector('.answer_block');
+            // show the answer block
+            answer_block.hidden = false;
+            // get the answer
+            answer = answer_block.getAttribute('data-answer');
+            // get the choices list
+            choices_list = this.parentElement.parentElement.querySelector('.choices-list');
+            // get the choices
+            choices = choices_list.querySelectorAll('li');
+            // loop through the choices
+            choices.forEach(function (choice) {
+                // get the choice
+                choice_letter = choice.getAttribute('data-choice');
+                // if the choice is the answer
+                if (choice_letter === answer) {
+                    // add the correct class
+                    choice.classList.add('correct');
+                } else {
+                    // add the wrong class
+                    choice.classList.add('wrong');
+                }
+            });
+        });
+    });
+
+    // if top_collapse_link is clicked
+    top_collapse_link = document.querySelectorAll('.top_collapse_link');
+    top_collapse_link.forEach(function (element) {
+        element.addEventListener('click', function () {
+            // get the collapse id
+            collapse_id = this.getAttribute('data-target');
+            // get the collapse element
+            collapse = document.querySelector(collapse_id);
+            // get the collapse status
+            collapse_status = collapse.classList.contains('show');
+            // if the collapse is open
+            if (collapse_status) {
+                // change the text
+                this.innerHTML = 'Show All';
+            } else {
+                // change the text\
+                this.innerHTML = 'Hide All';
+            }
+        });
+    });
+</script>
+{% endblock %}
+
+

@@ -1,0 +1,49 @@
+{
+  "schedule_data": [
+    {
+      "index": 1,
+      "uploading_method": "1",
+      "interval": "1",
+      "post_date": "2023-04-16",
+      "post_time": "17:51",
+      "description_type": "1",
+      "description": "I am usually bikini-ready all year round.",
+      "ai_generated": "false",
+      "price": "3",
+      "media_paths": [
+        "C:\\Users\\shahb\\PycharmProjects\\ClientsData\\SIA PROJECT\\download_files\\edited_image.jpg - 535 - 2023-04-16 16-51-48"
+      ],
+      "platform": "onlyfans"
+    },
+    {
+      "index": 2,
+      "uploading_method": "1",
+      "interval": "1",
+      "post_date": "2023-04-16",
+      "post_time": "17:52",
+      "description_type": "1",
+      "description": "I\u2019m enough to drive a saint to madness and a king to his knees.",
+      "ai_generated": "false",
+      "price": "17",
+      "media_paths": [
+        "C:\\Users\\shahb\\PycharmProjects\\ClientsData\\SIA PROJECT\\download_files\\edited_image.jpg - 80 - 2023-04-16 16-52-03"
+      ],
+      "platform": "onlyfans"
+    },
+    {
+      "index": 3,
+      "uploading_method": "2",
+      "interval": "false",
+      "post_date": "2024-04-06",
+      "post_time": "05:26",
+      "description_type": "1",
+      "description": "The good ones screw you, the bad ones screw you, and the rest don't know how to screw you.",
+      "ai_generated": "false",
+      "price": "0",
+      "media_paths": [
+        "C:\\Users\\shahb\\PycharmProjects\\ClientsData\\SIA PROJECT\\download_files\\edited_image.jpg - 27 - 2023-04-16 17-24-29"
+      ],
+      "platform": "twitter"
+    }
+  ]
+}

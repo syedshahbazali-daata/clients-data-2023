@@ -1,0 +1,11 @@
+Requirements:
+
+1-) Open terminal and run this command:
+sudo spctl --master-disable
+
+2-) it will ask for your password, enter it and press enter (you will not see the password as you type it so just type it and press enter)
+
+3-) Restart your Mac
+
+4-) Now you can share the Bot DMG file with your friends and they can install it without any problem.
+

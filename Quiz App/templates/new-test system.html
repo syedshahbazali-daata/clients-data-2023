@@ -1,0 +1,360 @@
+{% extends "base.html" %}
+{% block questions %}
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+
+
+    }
+
+    #start-btn {
+        background-color: #222222;
+        border: none;
+        color: white;
+        padding: 20px 40px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 20px;
+        margin: 20px;
+
+        cursor: pointer;
+        border-radius: 15px;
+        /* add shadow to the button */
+        box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.9);
+
+
+    }
+
+    #start-btn:hover {
+        background-color: #4CAF50;
+        color: white;
+
+        /* smooth transition */
+        transition: 0.3s;
+
+
+    }
+
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-content {
+        background-color: white;
+        margin: 10% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+    }
+
+    .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    #no_of_questions {
+        /* Align the select box to the center */
+        margin: auto;
+        display: block;
+        width: 30%;
+        padding: 10px;
+        font-size: 18px;
+        border: 1px solid #222222;
+        border-radius: 15px;
+        /* add shadow to the select box */
+        box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.9);
+
+    }
+
+
+</style>
+
+<br>
+<br>
+
+
+<!--make a div in the center of the page-->
+
+<div class="container start-test-container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="text-center">
+                <!--                <h1>Quiz App</h1>-->
+                <h1>Test System</h1>
+                <p>Click the button below to start the test</p>
+                <select id="no_of_questions" name="no_of_questions" class="form-select">
+                    <option value="10" selected>10 Questions</option>
+                    <option value="20">20 Questions</option>
+                    <option value="30">30 Questions</option>
+                    <option value="40">40 Questions</option>
+                    <option value="50">50 Questions</option>
+                </select>
+                <button id="start-btn">Start Test</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--make a div in the center of the page-->
+
+<div id="all-questions" class="container hidden">
+    <!-- timer -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="text-center">
+                <h2 id="timer">01:00:00</h2>
+            </div>
+        </div>
+        <!-- Total questions 1/20 on right side -->
+
+        <div class="col-md-12">
+            <div class="text-right">
+                <h2 id="total-questions" style=""></h2>
+            </div>
+        </div>
+    </div>
+
+
+    {% for question in questions %}
+    <!-- question 1 -->
+    <div id="question-1" class="row">
+        <!-- make a card for the question with shadow -->
+        <div class="card" style="box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.9); margin-bottom: 10px; padding: 25px">
+            <div class="col-md-12">
+                <!-- Previous question button -->
+
+
+                <h2>Question {{ question['question_number'] }}</h2>
+                <p>{{ question['question'] }}</p>
+                <input type="radio" name="answer-{{ question['question_number'] }}" value="A"> A. {{
+                question['answers']['a'] }}<br>
+                <input type="radio" name="answer-{{ question['question_number'] }}" value="B"> B. {{
+                question['answers']['b'] }}<br>
+                <input type="radio" name="answer-{{ question['question_number'] }}" value="C"> C. {{
+                question['answers']['c'] }}<br>
+                <input type="radio" name="answer-{{ question['question_number'] }}" value="D" checked="checked"> D. {{
+                question['answers']['d'] }}<br>
+                <!-- Answer hidden input -->
+                <input type="hidden" name="correct_answer-{{ question['question_number'] }}"
+                       value="{{ question['correctAnswer'] }}">
+
+                <!-- Show Explanation button -->
+                <button id="show-explanation-{{ question['question_number'] }}" class="btn btn-primary hidden"
+                        style="margin-top: 20px">Show Explanation
+                </button>
+                <!-- Explanation -->
+                <p id="explanation-{{ question['question_number'] }}" class="hidden"
+                   style="margin-top: 20px; color: #2a2a2a"><b>{{ question['explanation'] }}</b></p>
+
+
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+
+    <!-- Submit button -->
+    <div class="row" style="margin-bottom: 20px">
+        <div class="col-md-12">
+            <div class="text-center">
+                <button id="submit" class="btn btn-success" style="font-size: 20px">Submit</button>
+                <a id="reset" class="btn btn-danger hidden" style="font-size: 20px">Reset</a>
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+<!-- Result Modal -->
+
+
+<script>
+    const startBtn = document.getElementById("start-btn");
+    const allQuestions = document.getElementById("all-questions");
+    const startTestContainer = document.querySelector(".start-test-container");
+    const questionCards = document.querySelectorAll(".question-card");
+    let currentQuestion = 0;
+    // show total questions on basis of the number of questions selected
+
+
+
+    // h2: total-questions - if radio button is clicked, then add 1 to the 1/20
+    current_question = 0;
+    total_questions = {{ questions|length }};
+    const totalQuestions = document.getElementById("total-questions");
+
+    totalQuestions.innerHTML = `${currentQuestion}/${total_questions}`;
+
+    // //type="radio" on select of radio button, add 1 to the 1/20 but different name for each question
+
+    already_answered = [];
+    const radioBtn = document.querySelectorAll("input[type='radio']");
+    radioBtn.forEach((btn) => {
+        btn.addEventListener("click", () => {
+
+            // radiobiutton text would be bold
+
+
+            // name of the radio button
+            const name = btn.getAttribute("name");
+            // if name is not in the already_answered array, then add it
+            if (!already_answered.includes(name)) {
+                currentQuestion += 1;
+                totalQuestions.innerHTML = `${currentQuestion}/${total_questions}`;
+                already_answered.push(name);
+            }
+
+        });
+    });
+
+
+    // On click of the start button, show the questions and start the timer
+    startBtn.addEventListener("click", () => {
+        allQuestions.classList.remove("hidden");
+        startTestContainer.classList.add("hidden");
+        startTimer();
+    });
+
+    // check if the answer is correct
+    function checkAnswer(questionNumber) {
+        const answer = document.querySelector(`input[name="answer-${questionNumber}"]:checked`).value;
+        const correctAnswer = document.querySelector(`input[name="correct_answer-${questionNumber}"]`).value;
+        // both uppercase
+
+        // change the background color of the option to green if correct, else red
+        if (answer.toUpperCase() === correctAnswer.toUpperCase()) {
+            document.querySelector(`input[name="answer-${questionNumber}"]:checked`).parentElement.style.color = "green";
+        } else {
+            document.querySelector(`input[name="answer-${questionNumber}"]:checked`).parentElement.style.color = "red";
+        }
+
+
+        return answer.toUpperCase() === correctAnswer.toUpperCase();
+    }
+
+    // id="submit" on click of submit button, check all the answers and show the score
+    const submitBtn = document.getElementById("submit");
+    submitBtn.addEventListener("click", () => {
+
+            // check all answers selected else do not submit and show alert
+            for (let i = 1; i <= total_questions; i++) {
+
+                if (document.querySelector(`input[name="answer-${i}"]:checked`) === null) {
+                    alert("Please select all answers");
+                    return;
+                }
+            }
+
+
+            let score = 0;
+            for (let i = 1; i <= total_questions; i++) {
+                // if null, then do not add to score
+                if (document.querySelector(`input[name="answer-${i}"]:checked`) === null) {
+                    console.log("null");
+                    continue;
+                }
+
+                if (checkAnswer(i)) {
+                    score += 1;
+                    console.log(score);
+                } else {
+                    console.log("wrong");
+                }
+
+
+            }
+            endTest(score);
+
+        }
+    )
+    ;
+
+    function endTest(score) {
+        // id="timer" Hide and add new h2 text to "Result Score: 10/20"
+        const timer = document.getElementById("timer");
+        timer.classList.add("hidden");
+        const totalQuestions = document.getElementById("total-questions");
+        totalQuestions.innerHTML = `Result Score: ${score}/${total_questions}`;
+
+        // disable submit button
+        submitBtn.disabled = true;
+
+        // show reset button
+        const resetBtn = document.getElementById("reset");
+        resetBtn.classList.remove("hidden");
+
+        // show explanation button
+        const showExplanationBtn = document.querySelectorAll("button[id^='show-explanation-']");
+        showExplanationBtn.forEach((btn) => {
+            btn.classList.remove("hidden");
+        });
+
+        // on click show explanation button, show the explanation
+        showExplanationBtn.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                const questionNumber = btn.getAttribute("id").split("-")[2];
+                const explanation = document.getElementById(`explanation-${questionNumber}`);
+                explanation.classList.remove("hidden");
+            });
+        });
+
+
+        console.log("end test");
+
+    }
+
+
+    // Timer countdown from 3 hours
+    function startTimer() {
+        let time = 3599; // Time in seconds: 3 hours
+
+        const timer = document.getElementById("timer");
+        const countdown = setInterval(() => {
+            const hours = Math.floor(time / 3600);
+            const minutes = Math.floor((time % 3600) / 60);
+            const seconds = Math.floor(time % 60);
+            const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            timer.innerText = formattedTime;
+
+            if (time <= 0) {
+                clearInterval(countdown);
+                endTest();
+            } else {
+                time--;
+            }
+        }, 1000);
+    }
+
+</script>
+
+{% endblock %}

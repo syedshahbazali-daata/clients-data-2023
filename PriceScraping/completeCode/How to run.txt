@@ -1,0 +1,10 @@
+Hi, you need to download
+
+PYTHON: https://www.python.org/downloads/
+and need to install - make sure mark "add to path" when installing
+
+command:
+pip install -r requirements.txt
+
+running scraper: 
+python scraper.py

@@ -1,0 +1,143 @@
+body {
+    background-color: #2a2a2a;
+    /*center*/
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+
+    padding: 5px;
+}
+
+/*nav bar on right side*/
+.navbar {
+    float: right;
+    width: 20%;
+    height: 100%;
+    background-color: #2a2a2a;
+    border-radius: 10px;
+
+
+}
+
+
+.navbar-link {
+    color: white;
+    margin-left: 10px;
+    text-decoration: none;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 10px;
+
+}
+
+
+.navbar-link:hover {
+    color: #00bfff;
+    text-decoration: none;
+    transition: 0.2s;
+
+}
+
+.main-div {
+    margin-top: 30px;
+}
+
+
+.main-logo-head {
+    /* an image with text, I want both align in center  and padding between them*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+/* logo add blink effect*/
+#bot-state {
+    animation: blink 2s infinite;
+/*    bold*/
+    font-weight: bold;
+}
+
+
+.card {
+    /*card with shadow*/
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.9);
+    width: 25%;
+    margin: auto;
+    text-align: center;
+    border-radius: 10px;
+    background-color: #2a2a2a;
+    color: white;
+    padding: 10px;
+    /*border: 1px solid black;*/
+    border: 1px solid #00bfff;
+    cursor: pointer;
+    /* set height of card*/
+    height: 150px;
+}
+
+.card:hover {
+    border: 1px solid gold;
+    transition: 0.2s;
+
+    /*little pop up effect*/
+    transform: scale(1.1);
+
+}
+
+.card-text {
+    font-size: 10px;
+    text-align: left;
+    letter-spacing: 1px;
+
+}
+
+.cards {
+    /*cards in row*/
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.run-btn {
+    /*make it modern*/
+    background-color: springgreen;
+    width: 100px;
+    color: white;
+
+    border-radius: 20px;
+    padding: 10px;
+    font-size: 12px;
+    cursor: pointer;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    transition: 0.2s;
+    /*make it center*/
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+
+}
+
+
+.run-btn:hover {
+
+    color: white;
+    transition: 0.2s;
+    transform: scale(1.1);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+}
+
+/*date-time on hover bold*/
+.date-time-div:hover {
+    font-weight: bold;
+    transition: 0.2s;
+}
